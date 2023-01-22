@@ -1,7 +1,7 @@
 pipeline {
   agent any
   tools { 
-        maven 'Maven_3_5_2'  
+        maven 'Maven_3_6_3'  
     }
    stages{
     stage('CompileandRunSonarAnalysis') {
@@ -22,7 +22,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
                  script{
-                 app =  docker.build("asg")
+                 app =  docker.build("damtotiawsimage")
                  }
                }
             }
@@ -31,7 +31,7 @@ pipeline {
 	stage('Push') {
             steps {
                 script{
-                    docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
+                    docker.withRegistry('https://980545174819.dkr.ecr.eu-west-3.amazonaws.com', 'ecr:eu-west-3:aws-credentials') {
                     app.push("latest")
                     }
                 }
